@@ -22,6 +22,7 @@ RUN rm -rf Python-3.5.2 Python-3.5.2.tgz
 
 RUN pip install boto
 RUN pip install requests
+RUN pip install pyhocon
 
 # READY
 ADD test_prog.py /huyaks

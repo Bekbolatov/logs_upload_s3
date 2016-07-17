@@ -28,6 +28,15 @@ def upload():
         os.remove(file_path)
     print('done')
 
+
+# def get_keys():
+#     # this doesn't work well yet - using instance's role instead
+#     cred_uri = os.environ['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI']
+#     r = requests.get('http://169.254.170.2%s' % cred_uri) # smth. like /v1/credentials?id=b7712c71-ea8f-4bff-9939-160f8c7cdd42
+#     r = r.json()
+#     return (r['AccessKeyId'], r['SecretAccessKey'])
+
+
 if __name__ == '__main__':
     upload()
 
