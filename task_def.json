@@ -1,0 +1,41 @@
+{
+  "family": "LogUploader",
+  "taskRoleArn": "arn:aws:iam::445803720301:role/EcsTaskStarpractice",
+  "volumes": [
+    {
+      "name": "efs-vol",
+      "host": {
+        "sourcePath": "/EFS"
+      }
+    }
+  ],
+  "containerDefinitions": [
+    {
+      "name": "LogUploader",
+      "image": "445803720301.dkr.ecr.us-west-2.amazonaws.com/renatbek/logs:test",
+      "memory": 500,
+      "cpu": 500,
+      "essential": true,
+      "portMappings": [],
+      "mountPoints": [
+        {
+          "sourceVolume": "efs-vol",
+          "containerPath": "/EFS"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "log_uploader",
+          "awslogs-region": "us-west-2"
+        }
+      },
+      "volumesFrom": [],
+      "environment": [],
+      "extraHosts": [],
+      "ulimits": [],
+      "dockerLabels": {}
+    }
+  ]
+}
+
