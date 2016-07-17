@@ -1,0 +1,68 @@
+Sending build context to Docker daemon 44.54 kB
+Step 1 : FROM centos
+ ---> 05188b417f30
+Step 2 : MAINTAINER Renat Bekbolatov <renatbek@gmail.com>
+ ---> Using cache
+ ---> 88f67d5c6496
+Step 3 : RUN mkdir /huyaks
+ ---> Using cache
+ ---> 635fc9ab5ade
+Step 4 : WORKDIR /huyaks
+ ---> Using cache
+ ---> d03410d3ee61
+Step 5 : RUN curl -O https://www.python.org/ftp/python/3.5.2/Python-3.5.2.tgz
+ ---> Using cache
+ ---> 1ee3115366fe
+Step 6 : RUN yum update -y
+ ---> Using cache
+ ---> 16db5b164dc3
+Step 7 : RUN yum-builddep -y python
+ ---> Using cache
+ ---> 7f792f16b17a
+Step 8 : RUN yum install -y make
+ ---> Using cache
+ ---> 7caa2f66f4ee
+Step 9 : RUN tar xf Python-3.5.2.tgz
+ ---> Using cache
+ ---> a3260be2079b
+Step 10 : WORKDIR /huyaks/Python-3.5.2
+ ---> Using cache
+ ---> a8ee39c643e9
+Step 11 : RUN ./configure
+ ---> Using cache
+ ---> 2b50063eac7a
+Step 12 : RUN make && make install
+ ---> Using cache
+ ---> 8639b1a523e4
+Step 13 : RUN rm /usr/bin/python
+ ---> Using cache
+ ---> 105c1c75e75e
+Step 14 : RUN ln -s /usr/local/bin/python3.5 /usr/bin/python
+ ---> Using cache
+ ---> af0481e1cfbb
+Step 15 : RUN ln -s /usr/local/bin/pip3.5 /usr/bin/pip
+ ---> Using cache
+ ---> f57b96ee48ce
+Step 16 : WORKDIR /huyaks
+ ---> Using cache
+ ---> 791792a86db7
+Step 17 : RUN rm -rf Python-3.5.2 Python-3.5.2.tgz
+ ---> Using cache
+ ---> f38bc48be3aa
+Step 18 : RUN pip install boto
+ ---> Using cache
+ ---> d8bc069d9306
+Step 19 : RUN pip install requests
+ ---> Using cache
+ ---> 0ffd28c5e502
+Step 20 : RUN pip install pyhocon
+ ---> Using cache
+ ---> 5c9cd15ebfbc
+Step 21 : ADD upload_logs.py /huyaks
+ ---> ac99fb458200
+Removing intermediate container 89d80d4e7198
+Step 22 : CMD /usr/bin/python -u upload_logs.py
+ ---> Running in cfa69b592d94
+ ---> 62b16e2fd4d7
+Removing intermediate container cfa69b592d94
+Successfully built 62b16e2fd4d7

@@ -1,0 +1,10 @@
+{
+    "cluster": "CLUSTERNAME",
+    "service": "SERVICENAME",
+    "desiredCount": 1,
+    "taskDefinition": "TASK_FAMILY:REVISION",
+    "deploymentConfiguration": {
+        "maximumPercent": 100,
+        "minimumHealthyPercent": 0
+    }
+}

@@ -1,6 +1,7 @@
 
 
 
-Must set on_signal_file = '/EFS/conf/log_uploader_on' to enable running
-During maintenance, remove the file on EFS.
+Driven by configuration in `/EFS/conf/log_uploader.conf`.    
+
+During maintenance set `active = false`.    
 

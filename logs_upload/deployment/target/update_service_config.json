@@ -1,0 +1,10 @@
+{
+    "cluster": "mini",
+    "service": "LogUploader",
+    "desiredCount": 1,
+    "taskDefinition": "LogUploader:16",
+    "deploymentConfiguration": {
+        "maximumPercent": 100,
+        "minimumHealthyPercent": 0
+    }
+}

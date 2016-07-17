@@ -1,0 +1,65 @@
+{
+    "taskDefinition": {
+        "status": "ACTIVE", 
+        "family": "LogUploader", 
+        "requiresAttributes": [
+            {
+                "name": "com.amazonaws.ecs.capability.docker-remote-api.1.17"
+            }, 
+            {
+                "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+            }, 
+            {
+                "name": "com.amazonaws.ecs.capability.ecr-auth"
+            }, 
+            {
+                "name": "com.amazonaws.ecs.capability.task-iam-role"
+            }, 
+            {
+                "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+            }, 
+            {
+                "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+            }
+        ], 
+        "volumes": [
+            {
+                "host": {
+                    "sourcePath": "/EFS"
+                }, 
+                "name": "efs-vol"
+            }
+        ], 
+        "taskRoleArn": "arn:aws:iam::445803720301:role/EcsTaskStarpractice", 
+        "taskDefinitionArn": "arn:aws:ecs:us-west-2:445803720301:task-definition/LogUploader:16", 
+        "containerDefinitions": [
+            {
+                "environment": [], 
+                "name": "LogUploader", 
+                "mountPoints": [
+                    {
+                        "sourceVolume": "efs-vol", 
+                        "containerPath": "/EFS"
+                    }
+                ], 
+                "image": "445803720301.dkr.ecr.us-west-2.amazonaws.com/renatbek/logs:test", 
+                "dockerLabels": {}, 
+                "cpu": 500, 
+                "portMappings": [], 
+                "logConfiguration": {
+                    "logDriver": "awslogs", 
+                    "options": {
+                        "awslogs-group": "sparkydots_log_uploader", 
+                        "awslogs-region": "us-west-2"
+                    }
+                }, 
+                "ulimits": [], 
+                "memory": 500, 
+                "extraHosts": [], 
+                "essential": true, 
+                "volumesFrom": []
+            }
+        ], 
+        "revision": 16
+    }
+}

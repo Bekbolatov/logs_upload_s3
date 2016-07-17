@@ -25,7 +25,6 @@ RUN pip install requests
 RUN pip install pyhocon
 
 # READY
-ADD test_prog.py /huyaks
 ADD upload_logs.py /huyaks
 
 
