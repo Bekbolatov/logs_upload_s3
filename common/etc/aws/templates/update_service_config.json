@@ -4,7 +4,7 @@
     "desiredCount": TASK_COUNT,
     "taskDefinition": "TASK_FAMILY:REVISION",
     "deploymentConfiguration": {
-        "maximumPercent": SERVICE_TASK_COUNT_MAX,
-        "minimumHealthyPercent": SERVICE_TASK_COUNT_MIN
+        "maximumPercent": SERVICE_TASKCOUNT_MAX,
+        "minimumHealthyPercent": SERVICE_TASKCOUNT_MIN
     }
 }
