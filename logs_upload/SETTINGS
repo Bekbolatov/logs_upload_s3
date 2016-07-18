@@ -1,3 +1,4 @@
+DISTRIB_HOME=/Users/rbekbolatov/repos/gh/bekbolatov/IX/common
 
 DOCKER_IMAGE=logs:test
 
