@@ -1,0 +1,10 @@
+{
+    "cluster": "mini",
+    "service": "ConfigRedeploy",
+    "desiredCount": 1,
+    "taskDefinition": "ConfigRedeploy:10",
+    "deploymentConfiguration": {
+        "maximumPercent": 100,
+        "minimumHealthyPercent": 0
+    }
+}

@@ -1,4 +1,4 @@
-Sending build context to Docker daemon 20.48 kB
+Sending build context to Docker daemon 20.99 kB
 Step 1 : FROM alpine:3.3
  ---> 47cf20d8c26c
 Step 2 : MAINTAINER Renat Bekbolatov <renatbek@gmail.com>
@@ -7,11 +7,11 @@ Step 2 : MAINTAINER Renat Bekbolatov <renatbek@gmail.com>
 Step 3 : RUN mkdir /conf
  ---> Using cache
  ---> c6f3d6018b91
-Step 4 : ADD conf/ /conf/
- ---> 14842e7b925d
-Removing intermediate container e7b012a8ff6e
+Step 4 : ADD target/conf/ /conf/
+ ---> e35db06c63a5
+Removing intermediate container 850263c3ad1e
 Step 5 : CMD /bin/cp -rf /conf /EFS/.
- ---> Running in 501c27c21507
- ---> fdc7a02371ec
-Removing intermediate container 501c27c21507
-Successfully built fdc7a02371ec
+ ---> Running in dacfb9049daa
+ ---> 067aa490a11a
+Removing intermediate container dacfb9049daa
+Successfully built 067aa490a11a

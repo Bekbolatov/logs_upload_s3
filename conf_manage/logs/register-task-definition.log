@@ -31,7 +31,7 @@
             }
         ], 
         "taskRoleArn": "arn:aws:iam::445803720301:role/EcsTaskStarpractice", 
-        "taskDefinitionArn": "arn:aws:ecs:us-west-2:445803720301:task-definition/ConfigRedeploy:9", 
+        "taskDefinitionArn": "arn:aws:ecs:us-west-2:445803720301:task-definition/ConfigRedeploy:10", 
         "containerDefinitions": [
             {
                 "environment": [], 
@@ -60,6 +60,6 @@
                 "volumesFrom": []
             }
         ], 
-        "revision": 9
+        "revision": 10
     }
 }
