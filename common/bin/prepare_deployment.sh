@@ -2,18 +2,29 @@
 
 set -e
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 echo "Preparing deployment configs in $PWD"
 
+set -o allexport
+source $DIR/../etc/COMMON_SETTINGS
+set +o allexport
+
 mkdir -p logs
-mkdir -p deployment/target
-rm -rf deployment/target/*.json
-cp deployment/*.json deployment/target/.
-sed -i '.bak' -e "s/DOCKER_USER/$DOCKER_USER/g" deployment/target/*.json
-sed -i '.bak' -e "s/DOCKER_IMAGE/$DOCKER_IMAGE/g" deployment/target/*.json
-sed -i '.bak' -e "s/DOCKER_REGISTRY/$DOCKER_REGISTRY/g" deployment/target/*.json
-sed -i '.bak' -e "s/CLUSTERNAME/$CLUSTERNAME/g" deployment/target/*.json
-sed -i '.bak' -e "s/TASK_FAMILY/$TASK_FAMILY/g" deployment/target/*.json
-sed -i '.bak' -e "s/SERVICENAME/$SERVICENAME/g" deployment/target/*.json
-sed -i '.bak' -e "s/SET_MEMORY/$SET_MEMORY/g" deployment/target/*.json
-sed -i '.bak' -e "s/SET_CPU/$SET_CPU/g" deployment/target/*.json
-sed -i '.bak' -e "s/AWSLOGS_GROUP/$AWSLOGS_GROUP/g" deployment/target/*.json
+
+export AWS_CONF_TARGET_DIR=target/aws_configs
+
+mkdir -p $AWS_CONF_TARGET_DIR
+rm -rf $AWS_CONF_TARGET_DIR/*
+cp -rf $DIR/../etc/aws/templates/* $AWS_CONF_TARGET_DIR/.
+
+sed -i '.bak' -e "s/DOCKER_USER/$DOCKER_USER/g" $AWS_CONF_TARGET_DIR/*.json
+sed -i '.bak' -e "s/DOCKER_IMAGE/$DOCKER_IMAGE/g" $AWS_CONF_TARGET_DIR/*.json
+sed -i '.bak' -e "s/DOCKER_REGISTRY/$DOCKER_REGISTRY/g" $AWS_CONF_TARGET_DIR/*.json
+sed -i '.bak' -e "s/CLUSTERNAME/$CLUSTERNAME/g" $AWS_CONF_TARGET_DIR/*.json
+sed -i '.bak' -e "s/TASK_FAMILY/$TASK_FAMILY/g" $AWS_CONF_TARGET_DIR/*.json
+sed -i '.bak' -e "s/SERVICENAME/$SERVICENAME/g" $AWS_CONF_TARGET_DIR/*.json
+sed -i '.bak' -e "s/SET_MEMORY/$SET_MEMORY/g" $AWS_CONF_TARGET_DIR/*.json
+sed -i '.bak' -e "s/SET_CPU/$SET_CPU/g" $AWS_CONF_TARGET_DIR/*.json
+sed -i '.bak' -e "s/AWSLOGS_GROUP/$AWSLOGS_GROUP/g" $AWS_CONF_TARGET_DIR/*.json
+

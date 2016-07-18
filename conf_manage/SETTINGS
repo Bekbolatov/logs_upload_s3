@@ -1,0 +1,12 @@
+
+DOCKER_IMAGE=config:latest
+
+TASK_FAMILY=ConfigRedeploy
+SERVICENAME=$TASK_FAMILY
+
+SET_MEMORY=200
+SET_CPU=200
+
+AWSLOGS_GROUP=sparkydots_config
+
+

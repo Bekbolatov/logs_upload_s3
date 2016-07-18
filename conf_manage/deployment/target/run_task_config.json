@@ -1,6 +1,0 @@
-{
-    "cluster": "mini",
-    "taskDefinition": "ConfigRedeploy:9",
-    "count": 1,
-    "startedBy": "RenatAutoDeployer"
-}

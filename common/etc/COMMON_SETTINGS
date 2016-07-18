@@ -1,0 +1,5 @@
+
+CLUSTERNAME=mini
+
+DOCKER_REGISTRY=445803720301.dkr.ecr.us-west-2.amazonaws.com
+DOCKER_USER=renatbek
