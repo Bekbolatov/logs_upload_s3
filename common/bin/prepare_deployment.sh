@@ -23,8 +23,12 @@ sed -i '.bak' -e "s/DOCKER_IMAGE/$DOCKER_IMAGE/g" $AWS_CONF_TARGET_DIR/*.json
 sed -i '.bak' -e "s/DOCKER_REGISTRY/$DOCKER_REGISTRY/g" $AWS_CONF_TARGET_DIR/*.json
 sed -i '.bak' -e "s/CLUSTERNAME/$CLUSTERNAME/g" $AWS_CONF_TARGET_DIR/*.json
 sed -i '.bak' -e "s/TASK_FAMILY/$TASK_FAMILY/g" $AWS_CONF_TARGET_DIR/*.json
+sed -i '.bak' -e "s/TASK_COUNT/$TASK_COUNT/g" $AWS_CONF_TARGET_DIR/*.json
+sed -i '.bak' -e "s/SERVICE_TASK_COUNT_MAX/$SERVICE_TASK_COUNT_MAX/g" $AWS_CONF_TARGET_DIR/*.json
+sed -i '.bak' -e "s/SERVICE_TASK_COUNT_MIN/$SERVICE_TASK_COUNT_MIN/g" $AWS_CONF_TARGET_DIR/*.json
 sed -i '.bak' -e "s/SERVICENAME/$SERVICENAME/g" $AWS_CONF_TARGET_DIR/*.json
 sed -i '.bak' -e "s/SET_MEMORY/$SET_MEMORY/g" $AWS_CONF_TARGET_DIR/*.json
 sed -i '.bak' -e "s/SET_CPU/$SET_CPU/g" $AWS_CONF_TARGET_DIR/*.json
+sed -i '.bak' -e "s/PORT_MAPPING/$PORT_MAPPING/g" $AWS_CONF_TARGET_DIR/*.json
 sed -i '.bak' -e "s/AWSLOGS_GROUP/$AWSLOGS_GROUP/g" $AWS_CONF_TARGET_DIR/*.json
 

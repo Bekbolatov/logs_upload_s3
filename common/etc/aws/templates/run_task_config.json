@@ -1,6 +1,6 @@
 {
     "cluster": "CLUSTERNAME",
     "taskDefinition": "TASK_FAMILY:REVISION",
-    "count": 1,
+    "count": TASK_COUNT,
     "startedBy": "RenatAutoDeployer"
 }

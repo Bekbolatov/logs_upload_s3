@@ -16,7 +16,9 @@
       "memory": SET_MEMORY,
       "cpu": SET_CPU,
       "essential": true,
-      "portMappings": [],
+      "portMappings":
+        PORT_MAPPING
+      ,
       "mountPoints": [
         {
           "sourceVolume": "efs-vol",
