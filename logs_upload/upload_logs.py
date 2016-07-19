@@ -47,7 +47,7 @@ class LogUploader():
     def candidate_log_files(self, base_loc = None):
         if base_loc == None:
             base_loc = '/EFS/logs/%s' % self.conf[APP_NAME]
-        return glob.glob(base_loc + '/*.log.gz')
+        return glob.glob(base_loc + '/*.gz')
 
     def upload(self):
         self.last_upload_time = int(time.time())
