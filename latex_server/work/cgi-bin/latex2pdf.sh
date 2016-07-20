@@ -34,6 +34,9 @@ cat > $REQUESTDIR/$FILENAME.tex
 cd $REQUESTDIR
 pdflatex -interaction=nonstopmode $REQUESTDIR/$FILENAME.tex --output-directory $REQUESTDIR &> $REQUESTDIR/ALL.LOG
 
+touch /EFS/run/services/latex2pdf/$THIS_HOST
+cp -rf $REQUESTDIR /EFS/data/latex2pdf/.
+
 if [[ -e "$REQUESTDIR/$FILENAME.pdf" ]]; then
     echo '"status": 0 '
 else
@@ -42,5 +45,3 @@ fi
 
 echo "}"
 
-touch /EFS/run/services/latex2pdf/$THIS_HOST
-cp -rf $REQUESTDIR /EFS/data/latex2pdf/.

@@ -45,8 +45,6 @@ class ScheduledRunner():
             print("New conf:")
             print(self.conf)
             self.last_sync_conf = cur_time
-        else:
-            print("Conf not modified")
 
     def tick(self):
         self.sync_conf()
