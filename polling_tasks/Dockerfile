@@ -30,10 +30,12 @@ ADD upload_logs.py /huyaks
 ADD service_registry_cleaner.py /huyaks
 ADD scheduled_runner.py /huyaks
 
+ADD entrypoint.sh /huyaks/
+RUN chmod +x /huyaks/entrypoint.sh
+
 ADD conf /huyaks/
 
 WORKDIR /huyaks
 
-# Run the command on container startup
-CMD ["/usr/bin/python", "-u", "scheduled_runner.py"]
+ENTRYPOINT ["/huyaks/entrypoint.sh"]
 
