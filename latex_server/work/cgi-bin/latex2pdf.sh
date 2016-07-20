@@ -1,7 +1,8 @@
 #!/bin/bash
 
-PORT=6000
 BASEWORKDIR=/var/www/html/requests
+THIS_HOST=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
+
 FILENAME=$QUERY_STRING
 
 echo "Content-type: application/json"
@@ -12,23 +13,23 @@ if [[ "$REQUEST_METHOD" != "POST" ]]; then
     exit 0
 fi
 
+if [[ ! $FILENAME =~ ^[0-9a-zA-Z_]{1,19}$ ]]; then
+    echo '{ "error": "name can only have alphanumeric characters and underscore and have fewer than 20 characters" }'
+    exit 0
+fi
+
+
 echo "{"
 echo '"CONTENT_LENGTH": "'$CONTENT_LENGTH'", '
 echo '"QUERY_STRING": "'$QUERY_STRING'", '
 
+
 UUID=$(cat /proc/sys/kernel/random/uuid)
 REQUEST_ID=$(date +%Y%m%d-%H%M)-$RANDOM_$UUID
 
-
-THIS_HOST=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
-
 REQUESTDIR=$BASEWORKDIR/$REQUEST_ID
-echo '"uri": "/requests/'$REQUEST_ID'/'$FILENAME'.pdf", '
-echo '"local_uri": "http://'$THIS_HOST':'$PORT'/requests/'$REQUEST_ID'/'$FILENAME'.pdf", '
-# maybe just CP to EFS at the end
-
 mkdir -p $REQUESTDIR
-
+echo '"uri": "/requests/'$REQUEST_ID'/'$FILENAME'.pdf", '
 cat > $REQUESTDIR/$FILENAME.tex
 
 cd $REQUESTDIR
@@ -40,8 +41,8 @@ cp -rf $REQUESTDIR /EFS/data/latex2pdf/.
 if [[ -e "$REQUESTDIR/$FILENAME.pdf" ]]; then
     echo '"status": 0 '
 else
+    echo '"error": "check ALL.LOG", '
     echo '"status": 1 '
 fi
 
 echo "}"
-
