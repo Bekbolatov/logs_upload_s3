@@ -25,9 +25,15 @@ RUN pip install requests
 RUN pip install pyhocon
 
 # READY
+ADD field_names.py /huyaks
 ADD upload_logs.py /huyaks
+ADD service_registry_cleaner.py /huyaks
+ADD scheduled_runner.py /huyaks
 
+ADD conf /huyaks/
+
+WORKDIR /huyaks
 
 # Run the command on container startup
-CMD ["/usr/bin/python", "-u", "upload_logs.py"]
+CMD ["/usr/bin/python", "-u", "scheduled_runner.py"]
 
