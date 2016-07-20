@@ -1,5 +1,6 @@
 #!/bin/bash
 
+PORT=6000
 BASEWORKDIR=/var/www/html/requests
 FILENAME=$QUERY_STRING
 
@@ -19,8 +20,10 @@ UUID=$(cat /proc/sys/kernel/random/uuid)
 REQUEST_ID=$(date +%Y%m%d-%H%M)-$RANDOM_$UUID
 
 
+THIS_HOST=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
+
 REQUESTDIR=$BASEWORKDIR/$REQUEST_ID
-echo '"uri": "/requests/'$REQUEST_ID'/'$FILENAME'.pdf", '
+echo '"uri": "http://'$THIS_HOST':'$PORT'/requests/'$REQUEST_ID'/'$FILENAME'.pdf", '
 # maybe just CP to EFS at the end
 
 mkdir -p $REQUESTDIR
@@ -38,6 +41,6 @@ fi
 
 echo "}"
 
-
+touch /EFS/run/services/latex2pdf/$THIS_HOST
 
 

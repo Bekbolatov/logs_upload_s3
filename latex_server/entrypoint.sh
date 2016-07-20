@@ -11,5 +11,7 @@ chmod a+w -R /var/www/html
 rm -rf /run/httpd/* /tmp/httpd*
 
 #register with discovery service (mysql or zookeeper maybe)
+THIS_HOST=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
+touch /EFS/run/services/latex2pdf/$THIS_HOST
 
 exec /usr/sbin/apachectl -DFOREGROUND

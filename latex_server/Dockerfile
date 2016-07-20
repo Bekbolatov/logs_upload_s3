@@ -1,4 +1,4 @@
-# Creates renatbek/latex:server
+# Creates renatbek/latex_server:latest
 FROM centos:7
 MAINTAINER Renat Bekbolatov <renatbek@gmail.com>
 
