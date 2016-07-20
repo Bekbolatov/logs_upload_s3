@@ -36,7 +36,7 @@ class ScheduledRunner():
 
             source_conf = root_conf[SECTION_REGISTRY_CLEANER]
             self.conf[BASE_LOC] = source_conf.get_string(BASE_LOC)
-            self.conf[SERVICES] = source_conf.get_string(SERVICES)
+            self.conf[SERVICES] = source_conf[SERVICES]
 
             print("New conf:")
             print(self.conf)
@@ -47,8 +47,8 @@ class ScheduledRunner():
     def tick(self):
         self.sync_conf()
 
-        self.log_uploader.execute(self.conf)
         self.registry_cleaner.execute(self.conf)
+        self.log_uploader.execute(self.conf)
 
         time.sleep(self.conf[SYNC_CONF_INTERVAL])
 

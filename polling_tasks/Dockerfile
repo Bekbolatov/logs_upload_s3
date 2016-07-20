@@ -1,3 +1,4 @@
+# will be building renatbek/logs:test
 FROM centos
 MAINTAINER Renat Bekbolatov <renatbek@gmail.com>
 
@@ -33,9 +34,10 @@ ADD scheduled_runner.py /huyaks
 ADD entrypoint.sh /huyaks/
 RUN chmod +x /huyaks/entrypoint.sh
 
-ADD conf /huyaks/
+ADD conf /huyaks/conf
 
 WORKDIR /huyaks
 
 ENTRYPOINT ["/huyaks/entrypoint.sh"]
 
+CMD ["/usr/bin/python",  "-u", "scheduled_runner.py"]
