@@ -1,0 +1,174 @@
+%\documentclass[twocolumn]{article}
+\documentclass{article}
+\usepackage[margin=1in, headheight=1in, bottom=1in]{geometry}
+
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{url}
+
+\usepackage{wrapfig}
+
+\usepackage{booktabs}
+
+\usepackage{array,dcolumn, calc}
+
+\usepackage{graphicx}
+\graphicspath{ {img/} }
+
+\usepackage{subcaption}
+
+\usepackage{amsmath}
+
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.multipart}
+
+\lstset{ %
+  basicstyle=\footnotesize
+}
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.5em}
+
+
+\begin{document}
+%\pagenumbering{gobble}
+
+%\twocolumn[
+\centerline{\sc \large CSEP 546 - Assignment 4}
+\vspace{0.1pc}
+\centerline{\sc Learning Theory and SVMs}
+\centerline{\sc Renat Bekbolatov, \today }
+\vspace{1.1pc}
+%]
+
+
+%%%%%%%%%%%%     BIAS AND VARIANCE  %%%%%%%%%%%%
+\section*{Problem 1: Bias and Variance}
+
+We modified our ID3 implementation to accept a parameter of maximum depth, beyond which no further splitting is allowed. All of the estimates and bagging was performed with 10,000 bootstrapped sets.
+
+\textbf{Hypothesis}
+
+We expected that deeper trees produce better bias, while gaining more in variance. (We will be talking about the \emph{net variance}, i.e. $Var_{unbiased} - Var_{biased}$, to accomodate for the classification problem here.) That is, as we increase the maximum depth parameter, we should see decrease in bias component and increase in variance.
+The rationale for this hypothesis is that taller trees fit training data tighter, potentially overfitting, while short trees allow for smaller variance, but poorer match to the true concept.
+
+Then, we verified our hypothesis with actual runs of ID3 and calculating the bias and variance decomposition of error, varying the parameter of maximum tree depth.
+
+\textbf{Results}
+
+Results were in line with our hypothesis. We saw that as we increased maximum allowed tree depth, our bias error was decreasing and variance error was increasing - as can be seen on figure \ref{bva}.
+
+As we start with decision trees of at depth 0 (aka \emph{decision stumps}), we have no variance - because it is almost always the same tree (one leaf node). As we increase allowed maximum depth, we see a drop in bias error and simultaneous rise in the variance error. After some level, values stop changing and maximum depth parameter has no effect.
+
+\textbf{Bagging}
+
+Good news is that variance error can be eliminated with the technique of \emph{bagging}, as discussed in the previous homework. The reason is that when we perform bagging, we essentially eliminate the variance error by construction, and are left with only the bias error. This means that whatever helped reduce bias error component goes well with bagging.
+
+For the combined bagged models, we see that there is no variance component anymore, and only the bias, which is identical to the individual model cases, and is descreasing as we initially increase the maximum allowed tree depth, and flattening after some point at 22.80\%. Similarly, accuracies of bagged models are increasing to 77.20\% until a point where they flatten out.
+
+As we increase the maximum allowed tree depth, our total error drops together with the bias error, until a certain level, where it stays. This can be seen in the \emph{bias} portion of the stacked graph on figure \ref{bv2}.
+
+
+%%%%%%%%%%%%     PAC LEARNING  %%%%%%%%%%%%
+\section*{Problem 2: PAC Learning}
+
+Here we have to be careful to consider two cases:
+\newline
+1) when all hypothesis in version space are consistent
+\newline
+2) when some hypothesis in version space are inconsistent and therefore have non-zero error rates (e.g. there is noise in data).
+
+Let's handle these two cases separately. For the first case we will use the $\epsilon$-exhaustion bound $|H|e^{-\epsilon m}$ and for the second case we will use Hoeffding bound $|H|e^{-2m\epsilon^2}$.
+
+Now, we mention here that for the second case, we have insufficient information in the question - training error rates. Our question is asking about PAC guarantees on true error rates in absolute terms, namely 3\%. For this reason, we can say that the question is assuming that we are in case one, when our version space has only consistent hypotheses, so we will consider on that case from now on.
+
+In out situation, we have $\delta = 0.01$ and $\epsilon = 0.03$. Let's find $|H|$. $H$ contains all possible functions with domains distinguishable only by 4 conjunctions of 2 attributes and their negations. There are $\dbinom{10}{2}$ possible pairs of attributes (order doesn't matter here) and each generates a partitioning of all instances space into $2^2=4$ groups each getting either $y=+1$ or $y=-1$. Thus we have:
+
+$$|H| = \dbinom{10}{2} 2^{2^2} = 45 \times 16 = 720$$
+
+Then, the number of training examples must obey:
+$$ m \geq \frac{1}{\epsilon} (ln(|H|) + ln(1/\delta)) = \frac{1}{0.03} (ln(720) + ln(1/0.01)) \approx 373$$
+
+So, we need at least 373 independent training examples.
+
+%%%%%%%%%%%%     VC DIMENSION  %%%%%%%%%%%%
+\section*{Problem 3: VC Dimension}
+For clarity, denote this class of hypotheses defined by k intervals on real line as $C_k$.
+
+We will prove that $VC(C_k) = 2k$.
+
+Let's first show that VC dimension of this class can't be larger than $2k$, i.e. $VC(C_k) \leq 2k$. If it was larger, then we should be able to shatter some $2k+1$ sized set of points (if we can shatter N points, then we can also shatter fewer than N points simply by throwing away some of them). However, this is not possible, because we can't find a hypothesis from this class that can match the concept made up of alternating classes with this size as follows:
+
+{\centering
+\emph{1010...01}\par
+}
+
+total of $2k+1$ elements: $k+1$ \emph{1}'s and $k$ \emph{0}'s, where point \emph{1} is in the concept and point \emph{0} is outside. No two \emph{1}'s can be in the same interval, because any two of them are separated by at least one emph{0}. This means that we need at least $k+1$ intervals, but we have only $k$, leading to a contradition. Thus, $VC(C_k) \leq 2k$.
+
+We can also show that $VC(C_k) \geq 2k$, using induction.
+
+In the base case, we can shatter a set of 2 points $\{a, b\}$, without loss of generality having $a < b$, with single intervals, e.g. consider 4 intervals:
+
+{\centering
+$(a-2d, a-d), (a-d, a+d), (b-d, b+d), (b+d, b+2d)$\par
+}
+
+where $d=(a+b)/2$, leading to $VC(C_1) \geq 2$.
+
+Now, if for some $k \geq 1$ we have $VC(C_k) \geq 2k$, then we can show that $VC(C_{k+1}) \geq 2(k + 1)$.
+Let's say we have a set $S_k$ of $2k$ points that are shattered by $C_k$. Then we can add two points $a$ and $b$ on the right, and generate 4 groups of new disjoint sets with all $2^{2k}$ subsets of $S_k$, i.e. the power set $2^{S_k}$, repeated and varied only by existence or lack of points $a$ and $b$: $\{\} \cup  2^{S_k}$, $\{a\} \cup  2^{S_k}$, $\{b\} \cup  2^{S_k}$, and $\{a, b\} \cup  2^{S_k}$ - each representable with only one extra interval, meaning that the new set $S_k \cup \{a,b\}$ is shattered by $C_{k+1}$ $\Rightarrow$  $VC(c_{k+1}) \geq 2k + 2= 2(k + 1)$.
+
+Since we now have $VC(C_k) \leq 2k$ and $VC(C_k) \geq 2k$, it must be that $VC(C_k) = 2k$.
+
+%%%%%%%%%%%%     SVM  %%%%%%%%%%%%
+\section*{Problem 4: SVMs}
+
+\textbf{Kernel type (4.2)}
+
+We tried libsvm implementation of SVM on Diabetes dataset, varying the kernel type parameter.
+To make a fair comparison with other algorithms, we imputed missing values in the dataset with mean values. Also, we scaled the training and test datasets, as suggested by manual. We obtained the following results\footnote{Reached maximum number of iterations with polynomial and unscaled, marked with sign '*' in the table}:
+
+\begin {table}[h]
+\begin{center}
+\caption {SVM accuracy by kernel type \label{kernel}}
+\begin{tabular}{lcccc}
+\toprule
+{} &  \multicolumn{2}{c}{unscaled} & \multicolumn{2}{c}{scaled} \\
+{} & Accuracy & nSV & Accuracy & nSV\\
+Kernel type      &  &  & & \\
+\midrule
+Linear 				& 75.6\% & 260 & 73.2\% & 287 \\
+Polynomial (3)         & 68.0\%* & 153* & 68.0\% & 376 \\
+RBF 				& 68.0\% & 518 & 74.0\% & 332 \\
+Sigmoid           	 	& 68.0\% & 376 & 74.0\% & 362 \\
+
+\bottomrule
+\end{tabular}
+\end{center}
+\end {table}
+
+\textbf{Comparing to Naive Bayes classifier (4.3)}
+
+We adapted the Naive Bayes classifier to this dataset. Without doing any missing value imputation (treat missing value as a special 'token'), and using information gain for discretizing the data (using same discretizing as what we used in ID3 problems) - we are getting 74\% accuracy. This looks in line with what we are getting from SVM, because in this dataset, Naive Bayes seems to be as good of a fit as SVM.
+
+\textbf{Comparing to bagged decision tree classifier(4.4)}
+
+Without much effort, a single SVM model with a linear kernel seemed to already get pretty good results of 75.6\%, and scaled dataset versions accuracies of 74\% were also good for linear, RBF and sigmoid kernels - better than accuracies obtained with decision trees, which were around 72.5\%.
+
+We do see that bagged decision trees showed better accuracy. Part of the reason could be that we haven't tuned any SVM parameters, but we did some for the decision trees. In fact, that is likely, because after trying some grid search, better parameters showed accuracies above 77\%, which was comparable to bagged decision trees.
+
+It appears that SVM creates classifiers with pretty low net variance, and low bias - we do not expect to gain a lot from basic bagging, unless it is able to focus only on specific models.
+
+Indeed, when we estimated bias and variance, we saw that SVM's adjusted for generalization through search for wide margin. The variance numbers were low for polynomial and RBF kernels (<0.05), but almost non-existent for linear kernel. I compared similarly to bagging of decision trees.
+
+
+
+
+
+
+\end{document}

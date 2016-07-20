@@ -1,0 +1,5 @@
+requests
+
+curl -X POST --data-binary @simple.tex -i localhost:8000/cgi-bin/latex2pdf.sh?huyaks
+
+curl -X POST --data-binary @<TEXFILE> -i localhost:8000/cgi-bin/latex2pdf.sh?<FILENAME>
