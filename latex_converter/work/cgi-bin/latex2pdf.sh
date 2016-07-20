@@ -12,13 +12,15 @@ if [[ "$REQUEST_METHOD" != "POST" ]]; then
 fi
 
 echo "{"
-echo '"status": "Freaking Awesome!", '
 echo '"CONTENT_LENGTH": "'$CONTENT_LENGTH'", '
 echo '"QUERY_STRING": "'$QUERY_STRING'", '
 
-REQUEST_ID=$(date +%Y%m%d_%H%M)_$RANDOM
+UUID=$(cat /proc/sys/kernel/random/uuid)
+REQUEST_ID=$(date +%Y%m%d-%H%M)-$RANDOM_$UUID
+
+
 REQUESTDIR=$BASEWORKDIR/$REQUEST_ID
-echo '"uri": "/requests/'$REQUEST_ID'", '
+echo '"uri": "/requests/'$REQUEST_ID'/'$FILENAME'.pdf", '
 # maybe just CP to EFS at the end
 
 mkdir -p $REQUESTDIR
