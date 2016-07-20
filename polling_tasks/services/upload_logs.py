@@ -1,7 +1,7 @@
 import boto
 import glob, os
 import time
-from field_names import *
+from .field_names import *
 
 
 class LogUploader():

@@ -12,6 +12,6 @@ SET_MEMORY=200
 SET_CPU=200
 PORT_MAPPING=[]
 
-AWSLOGS_GROUP=sparkydots_config
+AWSLOGS_GROUP=config
 
 

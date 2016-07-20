@@ -2,7 +2,7 @@ DISTRIB_HOME=/Users/rbekbolatov/repos/gh/bekbolatov/IX/common
 
 DOCKER_IMAGE=logs:test
 
-TASK_FAMILY=LogUploader
+TASK_FAMILY=PollingTasks
 TASK_COUNT=1
 SERVICE_TASKCOUNT_MAX=100
 SERVICE_TASKCOUNT_MIN=0
@@ -12,7 +12,7 @@ SET_MEMORY=300
 SET_CPU=300
 PORT_MAPPING=[]
 
-AWSLOGS_GROUP=sparkydots_log_uploader
+AWSLOGS_GROUP=polling_tasks
 
 
 #SKIP_DOCKER_PUSH=true

@@ -10,8 +10,7 @@ set +o allexport
 echo "Collecting new configs"
 TARGET_CONF_DIR=target/conf
 mkdir -p $TARGET_CONF_DIR
-cp -rf ../logs_upload/conf/* $TARGET_CONF_DIR/.
-cp -rf ../sparkydots/conf/* $TARGET_CONF_DIR/.
+cp -rf ../polling_tasks/conf/* $TARGET_CONF_DIR/.
 ############################################################
 
 source $DISTRIB_HOME/bin/task_definition/publish_new_revision.sh
