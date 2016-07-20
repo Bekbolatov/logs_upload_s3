@@ -12,6 +12,9 @@ rm -rf /run/httpd/* /tmp/httpd*
 
 #register with discovery service (mysql or zookeeper maybe)
 THIS_HOST=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
-touch /EFS/run/services/latex2pdf/$THIS_HOST
+rm -rf /EFS/run/services/latex2pdf/$THIS_HOST
+chmod o+w -R /EFS/run/services/latex2pdf
+chmod o+w /EFS/data/latex2pdf
+su -s /bin/sh apache -c "touch /EFS/run/services/latex2pdf/$THIS_HOST"
 
 exec /usr/sbin/apachectl -DFOREGROUND

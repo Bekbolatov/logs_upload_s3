@@ -20,7 +20,7 @@ class ServiceRegistryMaintainer():
             for entry in entries:
                 last_mod = os.path.getmtime(loc + '/' + entry)
                 # don't touch just freshly touched services
-                if last_mod - cur_time > 10:
+                if cur_time - last_mod > 10:
                     address = 'http://%s:%s%s' % (entry, port, health_url)
                     try:
                         response = requests.get(address)
@@ -28,4 +28,5 @@ class ServiceRegistryMaintainer():
                     except Exception as exc:
                         status = -1
                     if status != 200:
+                        print("Removing %s: status: %s" % (loc + '/' + entry, str(status)))
                         os.remove(loc + '/' + entry)
