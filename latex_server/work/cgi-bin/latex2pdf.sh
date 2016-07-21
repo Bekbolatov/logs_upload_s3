@@ -40,7 +40,7 @@ pdflatex -interaction=nonstopmode $REQUESTDIR/$FILENAME.tex --output-directory $
 touch /EFS/run/services/latex2pdf/$THIS_HOST
 cp -rf $REQUESTDIR /EFS/data/latex2pdf/.
 
-if [[ -f "$REQUESTDIR/$FILENAME.pdf" && ! $(grep -Fq "! LaTeX Error" $REQUESTDIR/$FILENAME.log) ]]; then
+if [[ -f "$REQUESTDIR/$FILENAME.pdf" && -z "$(grep '^\!' $REQUESTDIR/$FILENAME.log)" ]]; then
     echo '"status": 0 '
 else
     echo '"error": "check ALL.LOG", '
