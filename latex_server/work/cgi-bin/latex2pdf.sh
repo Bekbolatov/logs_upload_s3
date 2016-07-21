@@ -3,7 +3,7 @@
 BASEWORKDIR=/var/www/html/requests
 THIS_HOST=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
 
-FILENAME=$QUERY_STRING
+FILENAME=genfile
 
 echo "Content-type: application/json"
 echo ""
