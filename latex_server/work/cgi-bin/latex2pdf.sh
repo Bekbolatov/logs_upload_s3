@@ -30,15 +30,17 @@ REQUEST_ID=$(date +%Y%m%d-%H%M)-$RANDOM_$UUID
 REQUESTDIR=$BASEWORKDIR/$REQUEST_ID
 mkdir -p $REQUESTDIR
 echo '"uri": "/requests/'$REQUEST_ID'/'$FILENAME'.pdf", '
+echo '"request": "/requests/'$REQUEST_ID'", '
+echo '"log": "/requests/'$REQUEST_ID'/ALL.LOG", '
 cat > $REQUESTDIR/$FILENAME.tex
 
 cd $REQUESTDIR
-pdflatex -interaction=nonstopmode $REQUESTDIR/$FILENAME.tex --output-directory $REQUESTDIR &> $REQUESTDIR/ALL.LOG
+pdflatex -interaction=nonstopmode $REQUESTDIR/$FILENAME.tex --output-directory $REQUESTDIR &> $REQUESTDIR/RAWALL.LOG
 
 touch /EFS/run/services/latex2pdf/$THIS_HOST
 cp -rf $REQUESTDIR /EFS/data/latex2pdf/.
 
-if [[ -e "$REQUESTDIR/$FILENAME.pdf" ]]; then
+if [[ -f "$REQUESTDIR/$FILENAME.pdf" && ! $(grep -Fq "! LaTeX Error" $REQUESTDIR/$FILENAME.log) ]]; then
     echo '"status": 0 '
 else
     echo '"error": "check ALL.LOG", '
@@ -46,3 +48,6 @@ else
 fi
 
 echo "}"
+
+
+sed '/var\/www\/html/d' $REQUESTDIR/RAWALL.LOG | tail -n +10 > $REQUESTDIR/ALL.LOG
