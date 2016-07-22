@@ -14,15 +14,15 @@ class ServiceRegistryMaintainer():
         for service, info in conf[SERVICES].items():
             cur_time = int(time.time())
             health_url = info.get_string(HEALTH_URL)
-            port = info.get_int(PORT)
             loc = conf[BASE_LOC] + '/' + service
             entries = [x for x in os.listdir(loc) if len(x) > 7 and not x.startswith('.')]
             for entry in entries:
                 last_mod = os.path.getmtime(loc + '/' + entry)
                 # don't touch just freshly touched services
                 if cur_time - last_mod > 10:
-                    address = 'http://%s:%s%s' % (entry, port, health_url)
                     try:
+                        pieces = entry.split(":")
+                        address = 'http://%s:%s%s' % (pieces[0], pieces[1], health_url)
                         response = requests.get(address)
                         status = response.status_code
                     except Exception as exc:
