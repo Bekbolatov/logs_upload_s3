@@ -1,3 +1,5 @@
+#!/bin/bash
+
 DISTRIB_HOME=/Users/rbekbolatov/repos/gh/bekbolatov/IX/common
 
 DOCKER_IMAGE=latex_server:latest
@@ -10,6 +12,7 @@ SERVICENAME=$TASK_FAMILY
 
 SET_MEMORY=200
 SET_CPU=200
-PORT_MAPPING='[ { "hostPort": 9002, "containerPort": 80, "protocol": "tcp" } ]'
+PORT=9002
+PORT_MAPPING='[ { "hostPort": '$PORT', "containerPort": 80, "protocol": "tcp" } ]'
 
 AWSLOGS_GROUP=latex_server

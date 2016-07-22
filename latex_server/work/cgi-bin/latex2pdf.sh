@@ -2,6 +2,7 @@
 
 BASEWORKDIR=/var/www/html/requests
 THIS_HOST=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
+PORT={SET_PORT}
 
 FILENAME=genfile
 
@@ -37,7 +38,7 @@ cat > $REQUESTDIR/$FILENAME.tex
 cd $REQUESTDIR
 pdflatex -interaction=nonstopmode $REQUESTDIR/$FILENAME.tex --output-directory $REQUESTDIR &> $REQUESTDIR/RAWALL.LOG
 
-touch /EFS/run/services/latex2pdf/$THIS_HOST
+touch /EFS/run/services/latex2pdf/$THIS_HOST:$PORT
 cp -rf $REQUESTDIR /EFS/data/latex2pdf/.
 
 if [[ -f "$REQUESTDIR/$FILENAME.pdf" && -z "$(grep '^\!' $REQUESTDIR/$FILENAME.log)" ]]; then

@@ -11,9 +11,9 @@ RUN yum install -y \
 
 RUN yum clean all
 
-ADD work /work
+ADD target/work /work
 
-ADD entrypoint.sh /entrypoint.sh
+ADD target/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 EXPOSE 80
