@@ -38,7 +38,7 @@ cat > $REQUESTDIR/$FILENAME.tex
 cd $REQUESTDIR
 pdflatex -interaction=nonstopmode $REQUESTDIR/$FILENAME.tex --output-directory $REQUESTDIR &> $REQUESTDIR/RAWALL.LOG
 
-touch /EFS/run/services/latex2pdf/$THIS_HOST:$PORT
+#touch /EFS/run/services/latex2pdf/$THIS_HOST:$PORT
 cp -rf $REQUESTDIR /EFS/data/latex2pdf/.
 
 if [[ -f "$REQUESTDIR/$FILENAME.pdf" && -z "$(grep '^\!' $REQUESTDIR/$FILENAME.log)" ]]; then
