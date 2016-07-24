@@ -19,7 +19,7 @@ class ServiceRegistryMaintainer():
             for entry in entries:
                 last_mod = os.path.getmtime(loc + '/' + entry)
                 # don't touch just freshly touched services
-                if cur_time - last_mod > 10:
+                if cur_time - last_mod > 60:
                     try:
                         pieces = entry.split(":")
                         address = 'http://%s:%s%s' % (pieces[0], pieces[1], health_url)
