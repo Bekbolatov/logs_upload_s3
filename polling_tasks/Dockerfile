@@ -1,5 +1,5 @@
 # will be building renatbek/logs:test
-FROM centos
+FROM centos:7
 MAINTAINER Renat Bekbolatov <renatbek@gmail.com>
 
 RUN mkdir /huyaks
