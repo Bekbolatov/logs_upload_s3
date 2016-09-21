@@ -1,4 +1,4 @@
-DISTRIB_HOME=/Users/rbekbolatov/repos/gh/bekbolatov/IX/common
+DISTRIB_HOME=${DISTRIB_HOME:-/Users/rbekbolatov/repos/gh/bekbolatov/IX/common}
 
 DOCKER_IMAGE=logs:test
 
